@@ -1,0 +1,128 @@
+#!/bin/python
+
+# Patkanyos konyv
+# Learning Python - 5th edition
+# O' reilly
+
+# Types
+
+# number
+# string
+# list
+# dictionaries
+# tuple
+# file, set...
+
+number = 0
+floating_point = 4.3
+
+print(number)
+print(number,floating_point)
+print(number * 2)
+print(number + 1)
+print(number ** 2) #ez a négyzetre emelés
+print(number // 2) #integer osztás -> csak az egész részt adja vissza
+# len() - szamjegyek
+
+# string
+
+s1 = "s'tring" 
+s2 = '"string"'
+print(s1, s2)
+
+multiline = """
+multiline string
+"""
+
+"""
+multiline comment
+"""
+
+print(s1[0])
+print(s1[-1])  #ezt nem értem, hogy mi
+print(s1[1:])  #ez azt jelenti, hogy a második indextől írjuk ki
+print(f"{2} and {3}")
+
+# s1[0] = 'z'  Ez hibás
+
+lst1 = [1,2,4]
+lst2 = ['a','b']
+lst3 = [1, 'a', [1,2,3]]
+matrix = [[1,2,3],
+          [4,5,6],
+          [7,8,9]]
+print(lst1,lst2,lst3,matrix)
+
+print(lst1[0])
+
+dictionary = {"key": 'val', "key2" : 2}
+print(dictionary)
+print(dictionary["key"])
+dictionary["newkey"] = 3.6
+print("key" in dictionary)
+
+# dict()
+
+d = dict(zip(['a', 'b', 'c'], [1,2,3]))
+print(d)
+
+# if
+
+# if statement
+# expression
+
+dictionary = {'key': 'val'}
+
+if 'key' in dictionary:
+    print(dictionary['key'])
+
+if 'another' in dictionary:
+    print(dictionary['another'])
+
+# && => and
+# || => or
+
+# ?:   #Elvis operátor, mert elforgatva oylan, mint Elvis szemei meg a haja
+# expr ? tru : false
+
+num = 3 if 3 < 4 else 10
+print(num)
+
+# for (i = 0; i < 10; i++)
+# for i in * range(10)*
+#
+# rande:
+# range(3) -> 0, 1, 2
+# range (1,3) -> 1 ,2
+# range (1,5,2) -> 1, 3
+
+for i in range(10):
+    print(i ** 2)
+
+def function():
+    print("I'm a finction")
+
+def function2(arg1, arg2):
+    print(arg1,arg2)
+
+def function3 (arg1, arg2 = 4):
+    print(arg1,arg2)
+
+def power (num, p):
+    return num ** p
+
+function()
+function2(1,2)
+function3(1)
+function3(1,2)
+
+print(power(2,3))
+
+class MyClass():
+    def __init__(self):
+        self.num = 9
+    def fun(self):
+        print(self.num)
+
+o = MyClass()
+o.fun()
