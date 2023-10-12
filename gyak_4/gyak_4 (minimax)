@@ -1,0 +1,70 @@
+#!/bin/python
+
+import random
+import pptree
+
+class Node:
+    def __init__(self, value = None, children = None):
+        self.value = value
+        self.children = children or []
+        self.evaluated = False
+
+    def __str__(self):
+        #return str(self.value)
+        return f"({self.value}){'*'if self.evaluated else ''}"
+
+def build_tree(node: Node, current_level: int, b: int, d: int):
+    if current_level == d-1:
+        for _ in range(b):
+            node.children.append(Node(random.randint(0, 100)))
+    else:
+        for _ in range(b):
+            child = Node()
+            build_tree(child, current_level+1,b,d)
+            node.children.append(child)
+
+def minimax(node: Node, is_max: bool = True):
+    if node.value is not None:
+        return node.value
+    if is_max:
+        node.value = max(map(lambda child: minimax(child, not is_max),node.children))
+    else:
+        node.value = min(map(lambda child: minimax(child, not is_max), node.children))
+    return node.value
+
+def minimax_alpha_beta(node: Node, is_max: bool = True, alpha= float('-inf'), beta = float('inf')):
+    if node.value is not None:
+        node.evaluated = True
+        return node.value
+
+    if is_max:
+        value = float('-inf')
+        for child in node.children:
+            value = max(value, minimax_alpha_beta(child, not  is_max, alpha, beta))
+
+            if beta < value:
+                #pruning
+                node.value = value
+                break
+            alpha = max(value, beta)
+        node.value = value
+        node.evaluated = True
+        return node.value
+    else:
+        value= float('inf')
+        for child in node.children:
+            value = min(value, minimax_alpha_beta(child, not is_max,alpha, beta))
+            if value<alpha:
+                node.valuebreak
+                break
+        beta = min(value, alpha)
+        node.value = value
+        node.evaluated = True
+        return node.value
+
+game_tree = Node()
+build_tree(game_tree, 0, 2, 4)
+#minimax(game_tree)
+minimax_alpha_beta(game_tree)
+print(game_tree.value)
+pptree.print_tree(game_tree)
