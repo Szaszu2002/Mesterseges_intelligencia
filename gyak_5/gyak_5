@@ -1,0 +1,56 @@
+#!/bin/python
+
+#Traveling Salesman Problem
+
+import math
+import random
+import numpy as np
+
+def calculate_distences(coordinates: tuple[tuple[int]]) -> list[list[float]]:
+    distances = []
+    for i in range(len(coordinates)):
+        distances[].append([])
+        for j in range(len(coordinates)):
+            distances[i].append(math.dist(coordinates[i], coordinates[j]))
+    return distances
+
+# [0, 1, 2, 3, 4, 5, 6, 7]
+# [1, 2, 3, 4, 5, 6, 7, 0]
+
+def tsp_of(cities: np.array, order: np.array):
+    return np.sum(np.linalg.norm(cities[order] -  cities[np.roll(order, 1)]))
+
+def distances_travelled(distances, order):
+    distance = 0.0
+    prev = order[0]
+    for i in range(1, len(order)):
+        distance += distances[order[prev]][order[i]]
+        prev = i
+    distance += distances[order[-1]][order[0]]
+    return distance
+
+def two_opt_search(distances, initial_order, iterations = 100):
+    order = list(initial_order)
+    for _ in range(iterations):
+        new_order = list(order)
+        a = random.randint(0, len(order) - 1)
+        b = random.randint(0, len(order) - 1)
+        new_order[a], new_order[b] = new_order[b], new_order[a]
+        if(distances_travelled(distances, new_order) < distances_travelled(distances, order)):
+            order = new_order
+    return order
+
+
+def main():
+    tsp = ((1, 1), (4, 2), (5, 2), (6, 4), (4, 4), (3, 6), (1, 5), (2, 3))
+    #print(calculate_distences(tsp))
+    distances = calculate_distences(tsp)
+    optimal_order = [0, 1, 2, 3, 4, 5, 6, 7]
+    print(distances_travelled(distances, optimal_order))
+    bad_order = [0, 4, 2, 6, 5, 3, 7, 1]
+    print(distances_travelled(distances, bad_order))
+    improved_order = two_opt_search(distances, bad_order, 1000)
+    print(distances_travelled(distances, improved_order))
+
+
+main()
